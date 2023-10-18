@@ -31,17 +31,6 @@ pipeline {
         }
         
     }
-    post{
-        always{
-            echo "This is always executed"
-        }
-        success{
-            echo "This is executed only if the build succeeds"
-        }
-        failure{
-            echo "This is executed only if the build fails"
-        }
-    }
     
     
 }
