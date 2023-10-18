@@ -1,22 +1,44 @@
 pipeline {
     agent any
+    environment {
+        mavenHome = tool 'mavenjenkins'
+        PATH = "${mavenHome}/bin:${PATH}"
+    }
     stages {
+        stage('Info') {
+            steps {
+                echo "$env.JOB_NAME"
+                echo "$env.BUILD_NUMBER"
+                echo "$env.BUILD_ID"
+                echo "$env.BUILD_URL"
+            }
+            
+        }
         stage('Compile') {
             steps {
-                echo 'compiling the code'
+                sh "mvn clean compile"
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing the code'
+                sh "mvn test"
             }
         }
-        stage('Build') {
+        stage('Package') {
             steps {
-                echo 'Building the code'
-                }
+                sh "mvn package -DskipTests"
             }
         }
-     
+        
+    post{
+        always{
+            echo "This is always executed"
+        }
+        success{
+            echo "This is executed only if the build succeeds"
+        }
+        failure{
+            echo "This is executed only if the build fails"
+        }
+    }
 }
-
