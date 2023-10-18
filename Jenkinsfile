@@ -30,6 +30,7 @@ pipeline {
             }
         }
         
+    }
     post{
         always{
             echo "This is always executed"
@@ -41,5 +42,6 @@ pipeline {
             echo "This is executed only if the build fails"
         }
     }
-}
+    
+    
 }
